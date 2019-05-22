@@ -7,8 +7,8 @@ const entrySchema = new mongoose.Schema({
     updatedAt: Date
 });
 
-entrySchema.statics.mostRecent = async function() {
-    return this.find().sort('createdAt').limit(5).exec();
-}
+// entrySchema.statics.mostRecent = async function() {
+//     return this.find().sort('createdAt').limit(5).exec();
+// }
 
 module.exports = mongoose.model('Entry', entrySchema);
