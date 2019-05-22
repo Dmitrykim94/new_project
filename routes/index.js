@@ -13,6 +13,8 @@ router.route('/reg')
   })
   .post(async (req, res) => {
     const allUsers = await User.find()
+    console.log(allUsers);
+    
     for (let i = 0; i < allUsers.length; i++) {
       if (allUsers[i].username === req.body.username || allUsers[i].email === req.body.email) {
         return res.json({ error: 'account already exists' })
@@ -38,12 +40,20 @@ router.route('/login')
   })
   .post(async (req, res) => {
     const arr = await User.find();
+
     for (let i = 0; i < arr.length; i++) {
-      if (req.body.username === arr[i].username && req.body.password === arr[i].password) {
+      if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
+        console.log('Успешная авторизация');
         res.json({ url: '/main' })
       }
     }
+    res.json({ error: 'Неправильно введены данные' })
+  })
+
+router.route('/main')
+  .get((req, res) => {
+    res.render('main')
   })
 
 router.get('/logout', async (req, res) => {

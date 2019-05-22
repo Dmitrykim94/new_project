@@ -13,11 +13,11 @@ async function seed() {
         email: 'pupkin@pochta.ru',
         password: 'mneZhalkoMuMu',
         tagArray: [{
-            tag: 4,
+            likes: 4,
             name: 'kittens'
         },
         {
-            tag: 10,
+            likes: 10,
             name: 'pups'
         }],
     })
@@ -28,11 +28,11 @@ async function seed() {
         email: 'NaGiBaToR@pochta.ru',
         password: 'YaVelikolepen',
         tagArray: [{
-            tag: 101,
+            likes: 101,
             name: 'girls'
         },
         {
-            tag: 10,
+            likes: 10,
             name: 'kittens'
         }],
     })
@@ -43,15 +43,15 @@ async function seed() {
         email: 'Ezh@pochta.ru',
         password: 'ochenDlinniiParole',
         tagArray: [{
-            tag: 3,
+            likes: 3,
             name: 'myaso'
         },
         {
-            tag: 6,
+            likes: 6,
             name: 'nasekomoe'
         },
         {
-            tag: 99,
+            likes: 99,
             name: 'sonic'
         }],
     })

@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector('form');
-
+    
     form.addEventListener('submit', async (e) => {
-        const username = document.querySelector('input[name="username"]').value;
-        const password = document.querySelector('input[name="password"]').value;
-        const inner = document.querySelector('#inner');
         e.preventDefault();
+        const username = document.querySelector('input[id="userName"]').value;
+        const password = document.querySelector('input[id="exampleInputPassword1"]').value;
+        const cardBody = document.querySelector('p');
         let res = await fetch('/login', {
             method: "POST",
             headers: {
@@ -19,7 +19,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         let response = await res.json();
-        if(response.url)
+        console.log(response);
+        
+        if(response.error){
+            cardBody.innerHTML = `
+            <p>${response.error}</p>`
+        }
+        else if (response.url)
             window.location = response.url
     })
+    
 });
