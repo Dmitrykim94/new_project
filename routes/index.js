@@ -4,11 +4,11 @@ const Reg = require('../models/reg');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
-  res.redirect('/entries');
+  res.redirect('index');
 });
 
 router.get('/secret', (req, res) => {
-  res.render('entries/secret', {name:req.session.name})
+  res.render('secret', {name:req.session.name})
   console.log(req.session.name);
 
   
@@ -23,12 +23,12 @@ router.get('/logout', async (req,res) => {
   
   await req.session.destroy();
   // console.log(req.session);
-  res.redirect('/entries')
+  res.redirect('/index')
 })
 
 router.route('/register')
   .get((req, res) => {
-    res.render('entries/reg')
+    res.render('reg')
   })
   .post(async (req, res) => {
     const logins = await Reg.find()
@@ -54,7 +54,7 @@ router.route('/login')
   .get((req, res) => {
     if (req.session.name)
       res.redirect('/secret')
-    res.render('entries/login')
+    res.render('login')
   })
   .post(async (req, res) => {
     

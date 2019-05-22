@@ -7,23 +7,23 @@ router.get('/', async function (req, res, next) {
     // let entries = await Entry.mostRecent();
     let entries = await Entry.find()
     console.log(entries);
-    res.render('entries/index', { entries });
+    res.render('index', { entries });
 });
 
 router.post('/', async function (req, res, next) {
     newEntry = new Entry({ title: req.body.title, body: req.body.body });
-    res.redirect(`/entries/${newEntry.id}`);
+    res.redirect(`/main/${newEntry.id}`);
 });
 
 // new entries
 router.get('/new', function (req, res, next) {
-    res.render('entries/new');
+    res.render('new');
 });
 
 //detail entry
 router.get('/:id', async function (req, res, next) {
     let entry = await Entry.findById(req.params.id);
-    res.render('entries/show', { entry });
+    res.render('show', { entry });
 });
 
 router.put('/:id', async function (req, res, next) {
@@ -33,7 +33,7 @@ router.put('/:id', async function (req, res, next) {
     entry.body = req.body.body;
     await entry.save();
 
-    res.redirect(`/entries/${entry.id}`);
+    res.redirect(`/main/${entry.id}`);
 
 });
 
@@ -44,7 +44,7 @@ router.delete('/:id', async function (req, res, next) {
 
 router.get('/:id/edit', async function (req, res, next) {
     let entry = await Entry.findById(req.params.id);
-    res.render('entries/edit', { entry });
+    res.render('edit', { entry });
 });
 module.exports = router;
 
