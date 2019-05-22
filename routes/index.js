@@ -7,9 +7,9 @@ router.get('/', function (req, res, next) {
   res.render('index');
 });
 
-router.route('/register')
+router.route('/reg')
   .get((req, res) => {
-    res.render('register')
+    res.render('reg')
   })
   .post(async (req, res) => {
     const allUsers = await User.find()
