@@ -14,8 +14,6 @@ router.route('/reg')
   })
   .post(async (req, res) => {
     const allUsers = await User.find()
-    console.log(allUsers);
-
     for (let i = 0; i < allUsers.length; i++) {
       if (allUsers[i].username === req.body.username || allUsers[i].email === req.body.email) {
         return res.json({ error: 'account already exists' })
@@ -24,10 +22,10 @@ router.route('/reg')
         req.session.name = req.body.username;
     }
     let newUser = new User({
-      username: req.body.username,
+      name: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      tagArray: [{ tag: req.body.likes }]
+      tagArray: [{ tag: false }]
     })
     await newUser.save();
     res.send({ url: '/main' })
