@@ -3,7 +3,7 @@ const router = express.Router();
 const Entry = require('../models/entry');
 console.log('started entries');
 
-router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res) {
     // let entries = await Entry.mostRecent();
     let entries = await Entry.find()
     console.log(entries);

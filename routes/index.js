@@ -1,74 +1,55 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Reg = require('../models/reg');
+const User = require('../models/user');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
-  res.redirect('index');
+  res.render('index');
 });
-
-router.get('/secret', (req, res) => {
-  res.render('secret', {name:req.session.name})
-  console.log(req.session.name);
-
-  
-})
-
-router.get('/logout', async (req,res) => {
-  console.log('>>>>>>>>>>>>>>>>>>>>');
-  console.log(req.session);
-  console.log('name is >>>>>>>>>>>>>');
-  console.log(req.session.name);
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>');
-  
-  await req.session.destroy();
-  // console.log(req.session);
-  res.redirect('/index')
-})
 
 router.route('/register')
   .get((req, res) => {
-    res.render('reg')
+    res.render('register')
   })
   .post(async (req, res) => {
-    const logins = await Reg.find()
-    for (let i = 0; i < logins.length; i++) {
-      if (logins[i].username === req.body.username || logins[i].email === req.body.email) {
+    const allUsers = await User.find()
+    for (let i = 0; i < allUsers.length; i++) {
+      if (allUsers[i].username === req.body.username || allUsers[i].email === req.body.email) {
         return res.json({ error: 'account already exists' })
       }
       else
         req.session.name = req.body.username;
     }
-    let newUser = new Reg({
+    let newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      tagArray: [{ tag: req.body.likes }]
     })
     await newUser.save();
-    res.send({ url: '/secret' })
+    res.send({ url: '/main' })
   })
-
-
 
 router.route('/login')
   .get((req, res) => {
     if (req.session.name)
-      res.redirect('/secret')
+      res.redirect('/main')
     res.render('login')
   })
   .post(async (req, res) => {
-    
-    // console.log(req.session);
-    
-    const arr = await Reg.find();
+    const arr = await User.find();
     for (let i = 0; i < arr.length; i++) {
       if (req.body.username === arr[i].username && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
-        res.json({ url: '/secret' })
+        res.json({ url: '/main' })
       }
     }
-    // console.log(req.session);
   })
+
+router.get('/logout', async (req, res) => {
+  await req.session.destroy();
+  res.redirect('/')
+})
 
 
 module.exports = router;

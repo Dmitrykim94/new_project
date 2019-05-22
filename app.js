@@ -22,7 +22,7 @@ const app = express();
 
 // Подключаем mongoose.
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:27017/broccoli', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/projectKKK', { useNewUrlParser: true });
 // mongoose.connect('mongodb://localhost:27017/login', {useNewUrlParser: true});
 
 // view engine setup
