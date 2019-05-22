@@ -64,7 +64,7 @@ app.use(methodOverride(function (req, res) {
 }));
 
 app.use('/', indexRouter);
-app.use('/entries', entriesRouter);
+app.use('/index', entriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

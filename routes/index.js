@@ -4,7 +4,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
-  res.render('index')
+  res.render('index');
 });
 
 router.route('/register')
