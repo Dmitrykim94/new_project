@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/main">Main <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -39,7 +39,6 @@
 <div class="container mt-4">
     <div class="row">
         {{#each posts }}
-        
         <div class="col-auto mb-3">
             <div class="PostCard" style="width: 18rem;">
                 <div class="card-body">
@@ -49,17 +48,13 @@
                             <img src='../images/green.jpg'>
                         </div>
                     </div>
-
                     <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
                     <span class='like' value={{this.likes}}>
                         Likes: {{ this.likes}}
                     </span>
-
-
                     <div>
                         Tag:@{{ this.tag}}
                     </div>
-                 
                 </div>
             </div>
         </div>
