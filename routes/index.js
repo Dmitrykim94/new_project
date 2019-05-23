@@ -58,7 +58,7 @@ router.route('/main')
     res.render('main', {posts})
 
   })
-  .put(async (req, res) => {
+  .post(async (req, res) => {
     let postName = req.body.postName
     let like = req.body.like
     let likeUpdated = ++like
