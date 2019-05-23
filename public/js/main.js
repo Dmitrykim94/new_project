@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const PostCard = document.querySelectorAll('.card-body');
@@ -12,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const postName = item.children[0];
            const postNameCorrect = postName.getAttribute('value');
             console.log(postNameCorrect)
+
             let res = await fetch('/main', {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -24,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             });
             let updatedPost = await res.json()
+            console.log(updatedPost.likeUpdated)
             likeForOnePost.innerText = `Likes: ${updatedPost.likeUpdated}`
+            likeForOnePost.setAttribute('value',  updatedPost.likeUpdated)
         });
     });
     
