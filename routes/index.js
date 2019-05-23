@@ -60,8 +60,12 @@ router.route('/main')
     let postName = req.body.postName
     let like = req.body.like
     let likeUpdated = ++like
-    await Post.findOneAndUpdate({ name: postName }, { $set: { likes: likeUpdated } }, { new: true })
-    res.json({likeUpdated})
+    await Post.findOneAndUpdate(
+      { name: postName }, 
+      { $set: { likes: likeUpdated } }, 
+      { new: true }
+    );
+    res.json({ likeUpdated })
   })
 
 

@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
         item.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            const likeForOnePost = item.getElementsByClassName('like');
+            const likeForOnePost = item.getElementsByClassName('like')[0];
             const valueOfLikes = item.children[3];
             const likeCorrect=valueOfLikes.getAttribute('value');
             const postName = item.children[0];
            const postNameCorrect = postName.getAttribute('value');
-            // console.log(postNameCorrect)
+            console.log(postNameCorrect)
             let res = await fetch('/main', {
                 method: 'PUT',
                 headers: {
