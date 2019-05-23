@@ -1,61 +1,68 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">🌟</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <a class="navbar-brand" href="#">🌟</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Information
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">About this site</a>
-                        <a class="dropdown-item" href="#">About us</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">How to use</a>
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        
-           <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log out</button>
-         
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Information
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">About this site</a>
+                    <a class="dropdown-item" href="#">About us</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">How to use</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
 
-   
-        <div class="container mt-4">
-            <div class="row">
-                    {{#each posts }}
-                <div class="col-auto mb-3">
-                    
-                    <div class="card" style="width: 18rem;">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log out</button>
+
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <div class="row">
+        {{#each posts }}
+        <div class="col-auto mb-3">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <p>{{ this.name }}</p>
+                    <div class="card">
                         <div class="card-body">
-                            <p>{{ this.name }}</p>
-                            <div class="card">
-                                <div class="card-body">
-                                    <img src='../images/green.jpg'>
-                                </div>
-                            </div>
-                            <button type="submit" id='likes' class="btn btn-light">❤️</button>
-                             Likes:{{ this.likes}}  
-                            Tag:@{{ this.tag}}
-
+                            <img src='../images/green.jpg'>
                         </div>
                     </div>
+///////////ACTION не написан
+                    <form method="put">
+                        <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
+                        <span id='like' value="{{ this.likes}}">
+                            Likes: {{ this.likes}}
+                        </span>
+                    </form>
+
+                    <div>
+                        Tag:@{{ this.tag}}
+                    </div>
                 </div>
-                    {{/each}}
             </div>
         </div>
+        {{/each}}
+    </div>
+</div>
 
-
+<script src='../js/main.js'></script>
