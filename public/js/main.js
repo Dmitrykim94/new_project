@@ -2,9 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const PostCard = document.querySelectorAll('.card-body');
-    // const PostCard = document.getElementsByClassName('container mt-4');
 
-    // console.log(PostCard)
     PostCard.forEach(function (item) {
         item.addEventListener('click', async (e) => {
             e.preventDefault();
@@ -33,11 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
             likeForOnePost.setAttribute('value',  updatedPost.likeUpdated)
         });
     });
-  
-  const likeIncrement = document.getElementById('likeIncrement');
+    
     const form = document.querySelector('form[class="form-inline my-2 my-lg-0"]');
     const searchInput = document.querySelector('input[class="form-control mr-sm-2"]');
- 
+    
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         window.location = `/filter?tag=${searchInput.value}`
@@ -45,6 +42,4 @@ document.addEventListener("DOMContentLoaded", function () {
   
   
 });
-
-
 
