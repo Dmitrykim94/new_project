@@ -14,7 +14,7 @@ router.route('/reg')
   })
   .post(async (req, res) => {
     const allUsers = await User.find()
-    
+
     for (let i = 0; i < allUsers.length; i++) {
       if (allUsers[i].username === req.body.username || allUsers[i].email === req.body.email) {
         return res.json({ error: 'account already exists' })
@@ -45,7 +45,7 @@ router.route('/login')
       if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
         console.log('Успешная авторизация');
-        
+
         res.json({ url: '/main' })
       }
     }
@@ -55,7 +55,7 @@ router.route('/login')
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
-    res.render('main', {posts,username:req.session.name})
+    res.render('main', { posts, username: req.session.name })
 
   })
   .post(async (req, res) => {
@@ -63,8 +63,8 @@ router.route('/main')
     let like = req.body.like
     let likeUpdated = ++like
     await Post.findOneAndUpdate(
-      { name: postName }, 
-      { $set: { likes: likeUpdated } }, 
+      { name: postName },
+      { $set: { likes: likeUpdated } },
       { new: true }
     );
     res.json({ likeUpdated })
@@ -79,9 +79,21 @@ router.get('/logout', async (req, res) => {
 router.route('/filter')
   .get(async (req, res) => {
     let tagFilter = req.query.tag;
-    const foundByTag = await Post.find({tag:tagFilter})
-    res.render('filtered', {foundByTag})
+    const foundByTag = await Post.find({ tag: tagFilter })
+    res.render('filtered', { foundByTag })
   })
+  .post(async (req, res) => {
+    let postName = req.body.postName
+    let like = req.body.like
+    let likeUpdated = ++like
+    await Post.findOneAndUpdate(
+    { name: postName },
+    { $set: { likes: likeUpdated } },
+    { new: true }
+  );
+    res.json({ likeUpdated })
+    })
+  
 
 
 

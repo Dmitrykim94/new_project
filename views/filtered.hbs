@@ -36,34 +36,35 @@
 
 
 
+
 <div class="container mt-4">
     <div class="row">
         {{#each foundByTag }}
         <div class="col-auto mb-3">
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <p>{{ this.name }}</p>
-                    <div class="card">
-                        <div class="card-body">
-                            <img src='../images/green.jpg'>
+        
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
+                        <div class="card">
+                            <div class="card-body">
+                                <img src='../images/green.jpg'>
+                            </div>
                         </div>
-                    </div>
-                    <form method="put">
-                        <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
-                        <span id='like' value="{{ this.likes}}">
-                            Likes: {{ this.likes}}
-                        </span>
-                    </form>
+                        <form method="put">
+                            <button id='likeIncrement' class="btn btn-light">❤️</button>
+                            <span id='like' value="{{ this.likes}}">
+                                Likes: {{ this.likes}}
+                            </span>
+                        </form>
 
-                    <div>
-                        Tag:@{{ this.tag}}
+                        <div>
+                            Tag:@{{ this.tag}}
+                        </div>
                     </div>
                 </div>
             </div>
+            {{/each}}
         </div>
-        {{/each}}
     </div>
 </div>
-
 <script src='/js/filter.js'></script>
