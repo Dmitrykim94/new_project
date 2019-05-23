@@ -54,7 +54,9 @@ router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
     // console.log(posts)
-    res.render('main', { posts })
+
+    res.render('main', {posts})
+
   })
   .put(async (req, res) => {
     let postName = req.body.postName
@@ -73,6 +75,16 @@ router.get('/logout', async (req, res) => {
   await req.session.destroy();
   res.redirect('/')
 })
+
+router.route('/filter')
+  .get(async (req, res) => {
+    let tagFilter = req.query.tag;
+    const foundByTag = await Post.find({tag:tagFilter})
+    // console.log(foundByTag);
+    res.render('filtered', {foundByTag})
+    // res.render('filtered', {users});
+  })
+
 
 
 module.exports = router;
