@@ -51,11 +51,21 @@ router.route('/login')
   })
 
 router.route('/main')
-  .get(async(req, res) => {
+  .get(async (req, res) => {
     let posts = await Post.find()
     // console.log(posts)
+
     res.render('main', {posts})
+
   })
+  .put(async (req, res) => {
+    let postName = req.body.postName
+    let like = req.body.like
+    let likeUpdated = ++like
+    await Post.findOneAndUpdate({ name: postName }, { $set: { likes: likeUpdated } }, { new: true })
+    res.json({likeUpdated})
+  })
+
 
 router.get('/logout', async (req, res) => {
   await req.session.destroy();
