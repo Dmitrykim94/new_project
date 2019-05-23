@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
         <a class="navbar-brand" href="#">🌟</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,28 +34,37 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-auto mb-3">
-                    {{#each posts }}
-                    
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <p>{{ this.name }}</p>
-                            <div class="card">
-                                <div class="card-body">
-                                    <img src='/images/green.jpg'>
-                                </div>
-                            </div>
-                            <button type="submit" id='likes' class="btn btn-light">❤️</button>
-                             Likes:{{ this.likes}}  
-                            Tag:@{{ this.tag}}
+ 
 
+<div class="container mt-4">
+    <div class="row">
+        {{#each posts }}
+        <div class="col-auto mb-3">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <p>{{ this.name }}</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <img src='../images/green.jpg'>
                         </div>
                     </div>
-                    {{/each}}
+///////////ACTION не написан
+                    <form method="put">
+                        <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
+                        <span id='like' value="{{ this.likes}}">
+                            Likes: {{ this.likes}}
+                        </span>
+                    </form>
+
+                    <div>
+                        Tag:@{{ this.tag}}
+                    </div>
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
+</div>
+
+<script src='../js/main.js'></script>
