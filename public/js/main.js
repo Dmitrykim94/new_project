@@ -39,7 +39,15 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         window.location = `/filter?tag=${searchInput.value}`
     })
-  
+    const container = document.getElementById("dogContainer");
+    const button = document.getElementById("fetchDog");
+
+    button.addEventListener("click", async (e)=>{
+        let resp = await fetch("https://dog.ceo/api/breeds/image/random");
+        let json = await resp.json();
+        console.log(json)
+        container.innerHTML = `<img src="${json.message}" />`
   
 });
 
+});
