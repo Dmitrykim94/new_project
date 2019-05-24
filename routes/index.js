@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/user');
-const Post = require('../models/post')
+const Post = require('../models/post');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
@@ -45,7 +45,6 @@ router.route('/login')
       if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
         console.log('Успешная авторизация');
-
         res.json({ url: '/main' })
       }
     }
@@ -73,14 +72,12 @@ router.route('/main')
     }
 
     if (tags.includes(tagName)) {
-      console.log('ura');
       let tagFound = userFound.tagArray.find((el) => { return el.tag === tagName })
       tagFound.likes += 1
       userFound.markModified('tagArray');
       await userFound.save();
     }
     else {
-      console.log('ne ura');
       await User.findByIdAndUpdate(
         { _id: userFound._id },
         { '$push': { 'tagArray': { tag: tagName, likes: 1 } } },
@@ -114,15 +111,39 @@ router.route('/filter')
     let postName = req.body.postName
     let like = req.body.like
     let likeUpdated = ++like
-    await Post.findOneAndUpdate(
-    { name: postName },
-    { $set: { likes: likeUpdated } },
-    { new: true }
-  );
-    res.json({ likeUpdated })
-    })
-  
 
+    let username = req.body.username;
+    let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
+
+    let userFound = await User.findOne({ name: username });
+    let tagArray = userFound.tagArray;
+    
+    let tags = [];
+    for (let i = 0; i < tagArray.length; i++) {
+      tags.push(tagArray[i].tag)
+    }
+
+    if (tags.includes(tagName)) {
+      let tagFound = userFound.tagArray.find((el) => { return el.tag === tagName })
+      tagFound.likes += 1
+      userFound.markModified('tagArray');
+      await userFound.save();
+    }
+    else {
+      await User.findByIdAndUpdate(
+        { _id: userFound._id },
+        { '$push': { 'tagArray': { tag: tagName, likes: 1 } } },
+        { 'new': true }
+      )
+    }
+
+    await Post.findOneAndUpdate(
+      { name: postName },
+      { $set: { likes: likeUpdated } },
+      { new: true }
+    );
+    res.json({ likeUpdated })
+  })
 
 
 module.exports = router;
