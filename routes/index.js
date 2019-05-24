@@ -117,7 +117,7 @@ router.route('/filter')
 
     let userFound = await User.findOne({ name: username });
     let tagArray = userFound.tagArray;
-    
+
     let tags = [];
     for (let i = 0; i < tagArray.length; i++) {
       tags.push(tagArray[i].tag)
@@ -144,6 +144,5 @@ router.route('/filter')
     );
     res.json({ likeUpdated })
   })
-
 
 module.exports = router;
