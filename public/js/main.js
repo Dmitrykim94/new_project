@@ -40,4 +40,32 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         window.location = `/filter?tag=${searchInput.value}`
     })
+
+    const preferencesButton = document.querySelector('button[name="getPreferences"]');
+    const innerDiv = document.querySelector('div[class="card"]');
+    preferencesButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        let resp = await fetch("https://dog.ceo/api/breeds/image/random");
+        let json = await resp.json();
+        console.log(json);
+        
+        innerDiv.innerHTML = `<div class="card-body">
+        <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
+        <div class="card">
+            <div class="card-body">
+            <img src="${json.message}" />
+            </div>
+        </div>
+        <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
+        <span class='like' value={{this.likes}}>
+            Likes: {{ this.likes}}
+        </span>
+        <div value={{this.tag}}>
+            Tag:@{{ this.tag}}
+        </div>
+
+    </div>`
+        
+    })
 });
+
