@@ -110,6 +110,18 @@ router.route('/filter')
     const foundByTag = await Post.find({ tag: tagFilter })
     res.render('filtered', { foundByTag, username: req.session.name })
   })
+  .post(async (req, res) => {
+    let postName = req.body.postName
+    let like = req.body.like
+    let likeUpdated = ++like
+    await Post.findOneAndUpdate(
+    { name: postName },
+    { $set: { likes: likeUpdated } },
+    { new: true }
+  );
+    res.json({ likeUpdated })
+    })
+  
 
 
 
