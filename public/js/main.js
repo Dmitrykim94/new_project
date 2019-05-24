@@ -41,4 +41,3 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location = `/filter?tag=${searchInput.value}`
     })
 });
-

@@ -14,11 +14,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    Information
+                    Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">About this site</a>
-                    <a class="dropdown-item" href="#">About us</a>
+                    <a class="dropdown-item" href="/settings">Settings</a>
+                    <a class="dropdown-item" href="/history">History</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">How to use</a>
                 </div>
@@ -35,7 +35,13 @@
     </div>
 </nav>
 
-
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-auto mb-3">
+            <button type="button" class="btn btn-dark">Get more {{maxOfLikes}}</button>
+        </div>
+    </div>
+</div>
 
 <div class="container mt-4">
     <div class="row">
