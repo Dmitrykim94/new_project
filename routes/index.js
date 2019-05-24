@@ -14,7 +14,7 @@ router.route('/reg')
   })
   .post(async (req, res) => {
     const allUsers = await User.find()
-    
+
     for (let i = 0; i < allUsers.length; i++) {
       if (allUsers[i].username === req.body.username || allUsers[i].email === req.body.email) {
         return res.json({ error: 'account already exists' })
@@ -26,7 +26,7 @@ router.route('/reg')
       name: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      tagArray: [{ tag: false }]
+      tagArray: []
     })
     await newUser.save();
     res.send({ url: '/main' })
@@ -45,7 +45,7 @@ router.route('/login')
       if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
         console.log('Успешная авторизация');
-        
+
         res.json({ url: '/main' })
       }
     }
@@ -55,20 +55,48 @@ router.route('/login')
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
-    res.render('main', {posts,username:req.session.name})
-
+    res.render('main', { posts, username: req.session.name })
   })
   .post(async (req, res) => {
     let postName = req.body.postName
     let like = req.body.like
     let likeUpdated = ++like
+    let username = req.body.username;
+    let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
+
+    let userFound = await User.findOne({ name: username });
+    let tagArray = userFound.tagArray;
+
+    let tags = [];
+    for (let i = 0; i < tagArray.length; i++) {
+      tags.push(tagArray[i].tag)
+    }
+
+    if (tags.includes(tagName)) {
+      console.log('ura');
+      let tagFound = userFound.tagArray.find((el) => { return el.tag === tagName })
+      tagFound.likes += 1
+      userFound.markModified('tagArray');
+      await userFound.save();
+    }
+    else {
+      console.log('ne ura');
+      await User.findByIdAndUpdate(
+        { _id: userFound._id },
+        { '$push': { 'tagArray': { tag: tagName, likes: 1 } } },
+        { 'new': true }
+      )
+    }
+
     await Post.findOneAndUpdate(
-      { name: postName }, 
-      { $set: { likes: likeUpdated } }, 
+      { name: postName },
+      { $set: { likes: likeUpdated } },
       { new: true }
     );
     res.json({ likeUpdated })
   })
+
+
 
 
 router.get('/logout', async (req, res) => {
@@ -79,8 +107,8 @@ router.get('/logout', async (req, res) => {
 router.route('/filter')
   .get(async (req, res) => {
     let tagFilter = req.query.tag;
-    const foundByTag = await Post.find({tag:tagFilter})
-    res.render('filtered', {foundByTag})
+    const foundByTag = await Post.find({ tag: tagFilter })
+    res.render('filtered', { foundByTag, username: req.session.name })
   })
 
 

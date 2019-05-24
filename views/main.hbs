@@ -25,7 +25,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <div style="padding:10px; color:white">Welcome {{username}}</div>
+            <div style="padding:10px; color:white" name="username" value={{username}}>Welcome {{username}}</div>
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -54,7 +54,7 @@
                     <span class='like' value={{this.likes}}>
                         Likes: {{ this.likes}}
                     </span>
-                    <div>
+                    <div value={{this.tag}}>
                         Tag:@{{ this.tag}}
                     </div>
 

@@ -14,11 +14,11 @@ async function seed() {
         password: 'mneZhalkoMuMu',
         tagArray: [{
             likes: 4,
-            name: 'kittens'
+            tag: 'kittens'
         },
         {
             likes: 10,
-            name: 'pups'
+            tag: 'pups'
         }],
     })
     await User0.save()
@@ -29,11 +29,11 @@ async function seed() {
         password: 'YaVelikolepen',
         tagArray: [{
             likes: 101,
-            name: 'girls'
+            tag: 'pups'
         },
         {
             likes: 10,
-            name: 'kittens'
+            tag: 'kittens'
         }],
     })
     await User1.save()
@@ -44,15 +44,15 @@ async function seed() {
         password: 'ochenDlinniiParole',
         tagArray: [{
             likes: 3,
-            name: 'myaso'
+            tag: 'pups'
         },
         {
             likes: 6,
-            name: 'nasekomoe'
+            tags: 'kittens'
         },
         {
             likes: 99,
-            name: 'sonic'
+            tags: 'sonic'
         }],
     })
     await User2.save()
