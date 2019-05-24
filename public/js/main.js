@@ -9,10 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const likeForOnePost = item.getElementsByClassName('like')[0];
             const valueOfLikes = item.children[3];
-            const likeCorrect=valueOfLikes.getAttribute('value');
+            const likeCorrect = valueOfLikes.getAttribute('value');
             const postName = item.children[0];
-           const postNameCorrect = postName.getAttribute('value');
-            console.log(postNameCorrect)
+            const postNameCorrect = postName.getAttribute('value');
+            // const userLikes = 0;
+            const userTag = item.children[4].getAttribute('value');
+            const usernameLogged = document.querySelector('div[name="username"]').getAttribute('value');
+
+
+            console.log(usernameLogged);
+            
+            // console.log(postNameCorrect)
 
             let res = await fetch('/main', {
                 method: 'POST',
@@ -22,23 +29,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({
                     like: likeCorrect,
-                    postName: postNameCorrect
+                    postName: postNameCorrect,
+                    tag: userTag,
+                    username: usernameLogged
                 })
             });
             let updatedPost = await res.json()
-            console.log(updatedPost.likeUpdated)
+            // console.log(updatedPost.likeUpdated)
             likeForOnePost.innerText = `Likes: ${updatedPost.likeUpdated}`
-            likeForOnePost.setAttribute('value',  updatedPost.likeUpdated)
+            likeForOnePost.setAttribute('value', updatedPost.likeUpdated)
         });
     });
-    
+
     const form = document.querySelector('form[class="form-inline my-2 my-lg-0"]');
     const searchInput = document.querySelector('input[class="form-control mr-sm-2"]');
-    
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         window.location = `/filter?tag=${searchInput.value}`
     })
+
     const container = document.getElementById("dogContainer");
     const button = document.getElementById("fetchDog");
 
@@ -48,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(json)
         container.innerHTML = `<img src="${json.message}" />`
   
+
 });
 
 });
