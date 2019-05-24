@@ -51,10 +51,28 @@ router.route('/login')
     res.json({ error: 'Неправильно введены данные' })
   })
 
+//////ROUTER FOR MAIN ACTIONS://////
+/////SHOWING POSTS AND LIKES COUNTERS FOR POSTS AND USERS////////////
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
-    res.render('main', { posts, username: req.session.name })
+    let user = await User.find({ name: req.session.name })
+    let tagArray = user[0].tagArray
+    let likesArray = []
+    let maxOfLikes
+    tagArray.forEach(function (elem) {
+      likesArray.push(elem.likes)
+      likesArray.sort(function (a, b) {
+        return a - b;
+      });
+    })
+    let indexOfMax = likesArray.length - 1
+    tagArray.forEach(function (elem) {
+      if(elem.likes===likesArray[indexOfMax]){
+          maxOfLikes=elem.tag
+      }
+    })
+    res.render('main', { posts, username: req.session.name , maxOfLikes})
   })
   .post(async (req, res) => {
     let postName = req.body.postName
@@ -94,13 +112,13 @@ router.route('/main')
   })
 
 
-
-
+//////ROUTER FOR LOGOUT////////////
 router.get('/logout', async (req, res) => {
   await req.session.destroy();
   res.redirect('/')
 })
 
+//////ROUTER FOR FILTRATION BY TAGS////////////
 router.route('/filter')
   .get(async (req, res) => {
     let tagFilter = req.query.tag;
