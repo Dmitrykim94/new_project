@@ -6,8 +6,4 @@ const regSchema = new mongoose.Schema({
     password: String
 });
 
-// entrySchema.statics.mostRecent = async function() {
-//     return this.find().sort('createdAt').limit(5).exec();
-// }
-
 module.exports = mongoose.model('Reg', regSchema);
