@@ -3,25 +3,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.querySelector('input[class="form-control mr-sm-2"]');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // console.log('gjfjhkgfkhkfgkjfgj')
         if (!searchInput.value)
             return;
         window.location = `/filter?tag=${searchInput.value}`
     });
 
-    
-    const PostCard = document.querySelectorAll('div[class="col-auto mb-3"]');
-
+    const PostCard = document.querySelectorAll('.card-body');
     PostCard.forEach(function (item) {
         item.addEventListener('click', async (e) => {
             e.preventDefault();
-          
-            const valueOfLikes = item.querySelector("span[id='like']");
-            const likeCorrect=valueOfLikes.getAttribute('value');
-            const postName = item.querySelector("p[class='postName']");
-            const postNameCorrect=postName.getAttribute('value');
-            
-            let res = await fetch(`/filter?tag=${searchInput.value}`, {
+
+            const likeForOnePost = item.getElementsByClassName('like')[0];
+            const valueOfLikes = item.children[3];
+            const likeCorrect = valueOfLikes.getAttribute('value');
+            const postName = item.children[0];
+            const postNameCorrect = postName.getAttribute('value');
+            const userTag = item.children[4].getAttribute('value');
+            const usernameLogged = document.querySelector('div[name="username"]').getAttribute('value');
+
+            let res = await fetch('/main', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -29,15 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({
                     like: likeCorrect,
-                    postName: postNameCorrect
+                    postName: postNameCorrect,
+                    tag: userTag,
+                    username: usernameLogged
                 })
             });
+
             let updatedPost = await res.json()
-            console.log(valueOfLikes)
-            valueOfLikes.innerText = `Likes: ${updatedPost.likeUpdated}`
-            valueOfLikes.setAttribute('value',  updatedPost.likeUpdated)
-          
+            likeForOnePost.innerText = `Likes: ${updatedPost.likeUpdated}`
+            likeForOnePost.setAttribute('value', updatedPost.likeUpdated)
         });
     });
-    
 })

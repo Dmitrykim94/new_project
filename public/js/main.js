@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const PostCard = document.querySelectorAll('.card-body');
@@ -12,14 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const likeCorrect = valueOfLikes.getAttribute('value');
             const postName = item.children[0];
             const postNameCorrect = postName.getAttribute('value');
-            // const userLikes = 0;
             const userTag = item.children[4].getAttribute('value');
             const usernameLogged = document.querySelector('div[name="username"]').getAttribute('value');
-
-
-            console.log(usernameLogged);
-            
-            // console.log(postNameCorrect)
 
             let res = await fetch('/main', {
                 method: 'POST',
@@ -35,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             });
             let updatedPost = await res.json()
-            // console.log(updatedPost.likeUpdated)
             likeForOnePost.innerText = `Likes: ${updatedPost.likeUpdated}`
             likeForOnePost.setAttribute('value', updatedPost.likeUpdated)
         });
@@ -48,17 +40,4 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         window.location = `/filter?tag=${searchInput.value}`
     })
-
-    const container = document.getElementById("dogContainer");
-    const button = document.getElementById("fetchDog");
-
-    button.addEventListener("click", async (e)=>{
-        let resp = await fetch("https://dog.ceo/api/breeds/image/random");
-        let json = await resp.json();
-        console.log(json)
-        container.innerHTML = `<img src="${json.message}" />`
-  
-
-});
-
 });

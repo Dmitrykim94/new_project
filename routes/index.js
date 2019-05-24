@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/user');
-const Post = require('../models/post')
+const Post = require('../models/post');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
@@ -45,33 +45,34 @@ router.route('/login')
       if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
         console.log('Успешная авторизация');
-
         res.json({ url: '/main' })
       }
     }
     res.json({ error: 'Неправильно введены данные' })
   })
 
+//////ROUTER FOR MAIN ACTIONS://////
+/////SHOWING POSTS AND LIKES COUNTERS FOR POSTS AND USERS////////////
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
-    let user = await User.find({name: req.session.name})
+    let user = await User.find({ name: req.session.name })
     let tagArray = user[0].tagArray
-    let likesArray =[]
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log(tagArray)
-    console.log(tagArray[0].tag)
-    console.log(tagArray[1].likes)
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>')
-    tagArray.forEach(function(elem){
+    let likesArray = []
+    let maxOfLikes
+    tagArray.forEach(function (elem) {
       likesArray.push(elem.likes)
-      likesArray.sort(function(a, b) {
+      likesArray.sort(function (a, b) {
         return a - b;
       });
     })
-    let x =likesArray.length-1
-    console.log(likesArray[x])
-    res.render('main', { posts, username: req.session.name })
+    let indexOfMax = likesArray.length - 1
+    tagArray.forEach(function (elem) {
+      if(elem.likes===likesArray[indexOfMax]){
+          maxOfLikes=elem.tag
+      }
+    })
+    res.render('main', { posts, username: req.session.name , maxOfLikes})
   })
   .post(async (req, res) => {
     let postName = req.body.postName
@@ -89,14 +90,12 @@ router.route('/main')
     }
 
     if (tags.includes(tagName)) {
-      console.log('ura');
       let tagFound = userFound.tagArray.find((el) => { return el.tag === tagName })
       tagFound.likes += 1
       userFound.markModified('tagArray');
       await userFound.save();
     }
     else {
-      console.log('ne ura');
       await User.findByIdAndUpdate(
         { _id: userFound._id },
         { '$push': { 'tagArray': { tag: tagName, likes: 1 } } },
@@ -113,13 +112,13 @@ router.route('/main')
   })
 
 
-
-
+//////ROUTER FOR LOGOUT////////////
 router.get('/logout', async (req, res) => {
   await req.session.destroy();
   res.redirect('/')
 })
 
+//////ROUTER FOR FILTRATION BY TAGS////////////
 router.route('/filter')
   .get(async (req, res) => {
     let tagFilter = req.query.tag;
@@ -130,14 +129,42 @@ router.route('/filter')
     let postName = req.body.postName
     let like = req.body.like
     let likeUpdated = ++like
+
+    let username = req.body.username;
+    let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
+
+    let userFound = await User.findOne({ name: username });
+    let tagArray = userFound.tagArray;
+
+    let tags = [];
+    for (let i = 0; i < tagArray.length; i++) {
+      tags.push(tagArray[i].tag)
+    }
+
+    if (tags.includes(tagName)) {
+      let tagFound = userFound.tagArray.find((el) => { return el.tag === tagName })
+      tagFound.likes += 1
+      userFound.markModified('tagArray');
+      await userFound.save();
+    }
+    else {
+      await User.findByIdAndUpdate(
+        { _id: userFound._id },
+        { '$push': { 'tagArray': { tag: tagName, likes: 1 } } },
+        { 'new': true }
+      )
+    }
+
     await Post.findOneAndUpdate(
-    { name: postName },
-    { $set: { likes: likeUpdated } },
-    { new: true }
-  );
+      { name: postName },
+      { $set: { likes: likeUpdated } },
+      { new: true }
+    );
     res.json({ likeUpdated })
-    })
-  
-  
+  })
+
+//////ROUTER FOR USER PREFERENCES////////////
+
+
 
 module.exports = router;
