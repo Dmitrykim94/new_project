@@ -25,6 +25,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
+            <div style="padding:10px; color:white">Welcome {{username}}</div>
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -41,30 +42,30 @@
     <div class="row">
         {{#each foundByTag }}
         <div class="col-auto mb-3">
-        
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
-                        <div class="card">
-                            <div class="card-body">
-                                <img src='../images/green.jpg'>
-                            </div>
-                        </div>
-                        <form method="put">
-                            <button id='likeIncrement' class="btn btn-light">❤️</button>
-                            <span id='like' value="{{ this.likes}}">
-                                Likes: {{ this.likes}}
-                            </span>
-                        </form>
 
-                        <div>
-                            Tag:@{{ this.tag}}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <img src='../images/green.jpg'>
                         </div>
+                    </div>
+                    <form method="put">
+                        <button id='likeIncrement' class="btn btn-light">❤️</button>
+                        <span id='like' value="{{ this.likes}}">
+                            Likes: {{ this.likes}}
+                        </span>
+                    </form>
+
+                    <div>
+                        Tag:@{{ this.tag}}
                     </div>
                 </div>
             </div>
-            {{/each}}
         </div>
+        {{/each}}
     </div>
+</div>
 </div>
 <script src='/js/filter.js'></script>
