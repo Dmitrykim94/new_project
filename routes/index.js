@@ -56,6 +56,9 @@ router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
     res.render('main', { posts, username: req.session.name })
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    console.log(req.session.name);
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
   })
   .post(async (req, res) => {
@@ -80,7 +83,10 @@ router.route('/filter')
   .get(async (req, res) => {
     let tagFilter = req.query.tag;
     const foundByTag = await Post.find({ tag: tagFilter })
-    res.render('filtered', { foundByTag })
+    res.render('filtered', { foundByTag , username: req.session.name })
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    console.log(req.session.name);
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>');
   })
   .post(async (req, res) => {
     let postName = req.body.postName
