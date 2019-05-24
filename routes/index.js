@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Post = require('../models/post');
 const router = express.Router();
+const fetch = require('node-fetch');
 
 router.get('/', function (req, res, next) {
   res.render('index');
@@ -52,22 +53,23 @@ router.route('/login')
   })
 
 //////ROUTER FOR MAIN ACTIONS://////
+
 /////SHOWING POSTS AND LIKES COUNTERS FOR POSTS AND USERS////////////
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
     let user = await User.find({ name: req.session.name })
-    let tagArray = user[0].tagArray
+    let arrayOfTags = user[0].tagArray
     let likesArray = []
     let maxOfLikes
-    tagArray.forEach(function (elem) {
+    arrayOfTags.forEach(function (elem) {
       likesArray.push(elem.likes)
       likesArray.sort(function (a, b) {
         return a - b;
       });
     })
     let indexOfMax = likesArray.length - 1
-    tagArray.forEach(function (elem) {
+    arrayOfTags.forEach(function (elem) {
       if(elem.likes===likesArray[indexOfMax]){
           maxOfLikes=elem.tag
       }
@@ -109,6 +111,7 @@ router.route('/main')
       { new: true }
     );
     res.json({ likeUpdated })
+      
   })
 
 
@@ -163,7 +166,9 @@ router.route('/filter')
     res.json({ likeUpdated })
   })
 
+  
 
+  
 
 
 

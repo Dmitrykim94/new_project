@@ -38,18 +38,29 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-auto mb-3">
-            <button type="button" class="btn btn-dark">Get more {{maxOfLikes}}</button>
+            <button type="button" name="getPreferences" class="btn btn-dark">Get more {{maxOfLikes}}</button>
+        </div>
+    </div>
+</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-auto mb-3">
+            <div class="card" style="width: 18rem;">
+                <div class="mainCardForTags">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+
 <div class="container mt-4">
     <div class="row">
         {{#each posts }}
-
         <div class="col-auto mb-3">
             <div class="card" style="width: 18rem;">
-                <div class="card-body">
+                <div class="mainCard">
                     <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
                     <div class="card">
                         <div class="card-body">
@@ -70,5 +81,6 @@
         {{/each}}
     </div>
 </div>
+
 
 <script src='/js/main.js'></script>
