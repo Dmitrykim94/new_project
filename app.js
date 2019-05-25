@@ -10,6 +10,7 @@ const client  = redis.createClient();
 const RedisStore = require('connect-redis')(session);
 const indexRouter = require('./routes/index');
 const entriesRouter = require('./routes/entries');
+const hbs = require( 'express-handlebars');
 
 let sessionConfig = {
   secret: 'afsafsagsgagasg',
@@ -28,6 +29,11 @@ mongoose.connect('mongodb://localhost:27017/projectKKK', { useNewUrlParser: true
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+// app.engine( 'hbs', hbs( {
+//   extname: 'hbs',
+//   layoutsDir: __dirname + '/views',
+//   partialsDir: __dirname + '/views'
+// }));
 
 app.use(logger('dev'));
 app.use(express.json());
