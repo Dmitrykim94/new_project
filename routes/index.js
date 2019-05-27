@@ -71,9 +71,7 @@ router.route('/main')
     let indexOfMax = likesArray.length - 1
     arrayOfTags.forEach(function (elem) {
       if (elem.likes === likesArray[indexOfMax]) {
-        maxOfLikes = elem.tags
-
-        console.log(maxOfLikes)
+        maxOfLikes = elem.tag
       }
     })
     let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
@@ -83,8 +81,6 @@ router.route('/main')
     pic.forEach(function (element) {
       smth.push({ pic: element, tag: maxOfLikes, likes: 0 })
     })
-    console.log(smth)
-
     res.render('main', { posts, smth, username: req.session.name })
   })
   .post(async (req, res) => {
@@ -92,7 +88,15 @@ router.route('/main')
     let like = req.body.like
     let likeUpdated = ++like
     let username = req.body.username;
-    let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
+    let tagName = req.body.tag;
+
+    // console.log(req.body.like);
+    // console.log(req.body.postName);
+    // console.log(req.body.tag);
+    // console.log(req.body.pic);
+    // console.log(req.body.username);
+
+
 
     let userFound = await User.findOne({ name: username });
     let tagArray = userFound.tagArray;
@@ -116,13 +120,31 @@ router.route('/main')
       )
     }
 
-    let post = new Post({
-      like: req.body.like,
-      postName: req.body.postName,
-      tag: req.body.tag,
-      pic: req.body.pic,
-    })
-console.log(post)
+    const picsObj = await Post.findOne({ pic: req.body.pic })
+    // console.log(picsObj);
+
+    if (picsObj === null) {
+      console.log('doesnt exist');
+      console.log(11111111111111111111111111111111);
+      //сохраняет если не существует такого пика
+      // let post = new Post({
+      //   like: 1,
+      //   postName: req.body.postName,
+      //   tag: req.body.tag,
+      //   pic: req.body.pic,
+      // })
+      // await post.save();
+    }
+    // else {
+          // если существует такой пик то просто добавляет лайк
+    //   console.log('exists pics already');
+    //   await Post.findOneAndUpdate(
+    //     { name: postName },
+    //     { $set: { likes: likeUpdated } },
+    //     { new: true }
+    //   );
+    // }
+    // console.log(post)
     // await post.save()
 
     await Post.findOneAndUpdate(
