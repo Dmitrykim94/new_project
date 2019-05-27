@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     PostCard.forEach(function (item) {
         item.addEventListener('click', async (e) => {
             e.preventDefault();
-
+//CoNSDJKDLDDJDDFF
             const likeForOnePost = item.getElementsByClassName('like')[0];
             const valueOfLikes = item.children[3];
             const likeCorrect = valueOfLikes.getAttribute('value');
