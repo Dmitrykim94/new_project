@@ -36,7 +36,7 @@ router.route('/reg')
 router.route('/login')
   .get((req, res) => {
     if (req.session.name)
-      res.redirect('/main')
+      return res.redirect('/main')
     res.render('login')
   })
   .post(async (req, res) => {
@@ -46,7 +46,7 @@ router.route('/login')
       if (req.body.username === arr[i].name && req.body.password === arr[i].password) {
         req.session.name = req.body.username;
         console.log('Успешная авторизация');
-        res.json({ url: '/main' })
+        return res.json({ url: '/main' })
       }
     }
     res.json({ error: 'Неправильно введены данные' })
@@ -90,14 +90,6 @@ router.route('/main')
     let username = req.body.username;
     let tagName = req.body.tag;
 
-    // console.log(req.body.like);
-    // console.log(req.body.postName);
-    // console.log(req.body.tag);
-    // console.log(req.body.pic);
-    // console.log(req.body.username);
-
-
-
     let userFound = await User.findOne({ name: username });
     let tagArray = userFound.tagArray;
 
@@ -121,37 +113,27 @@ router.route('/main')
     }
 
     const picsObj = await Post.findOne({ pic: req.body.pic })
-    // console.log(picsObj);
 
     if (picsObj === null) {
       console.log('doesnt exist');
-      console.log(11111111111111111111111111111111);
-      //сохраняет если не существует такого пика
-      // let post = new Post({
-      //   like: 1,
-      //   postName: req.body.postName,
-      //   tag: req.body.tag,
-      //   pic: req.body.pic,
-      // })
-      // await post.save();
+      let post = new Post({
+        like: 1,
+        postName: req.body.postName,
+        tag: req.body.tag,
+        pic: req.body.pic,
+      })
+      await post.save();
     }
-    // else {
-          // если существует такой пик то просто добавляет лайк
-    //   console.log('exists pics already');
-    //   await Post.findOneAndUpdate(
-    //     { name: postName },
-    //     { $set: { likes: likeUpdated } },
-    //     { new: true }
-    //   );
-    // }
-    // console.log(post)
-    // await post.save()
+    else {
+      console.log('exists pics already');
+      await Post.findOneAndUpdate(
+        { pic: req.body.pic },
+        { $set: { like: likeUpdated } },
+        { new: true }
+      );
+    }
 
-    await Post.findOneAndUpdate(
-      { name: postName },
-      { $set: { likes: likeUpdated } },
-      { new: true }
-    );
+    
     res.json({ likeUpdated })
 
   })
