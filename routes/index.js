@@ -71,15 +71,21 @@ router.route('/main')
     let indexOfMax = likesArray.length - 1
     arrayOfTags.forEach(function (elem) {
       if (elem.likes === likesArray[indexOfMax]) {
-        maxOfLikes = elem.tag
+        maxOfLikes = elem.tags
+
+        console.log(maxOfLikes)
       }
     })
-      let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
-      let json = await resp.json();
-      let pic = json.message
-      
+    let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
+    let json = await resp.json();
+    let pic = json.message
+    let smth = []
+    pic.forEach(function (element) {
+      smth.push({ pic: element, tag: maxOfLikes, likes: 0 })
+    })
+    console.log(smth)
 
-    res.render('main', { posts, pic, username: req.session.name, maxOfLikes })
+    res.render('main', { posts, smth, username: req.session.name })
   })
   .post(async (req, res) => {
     let postName = req.body.postName
@@ -109,6 +115,15 @@ router.route('/main')
         { 'new': true }
       )
     }
+
+    let post = new Post({
+      like: req.body.like,
+      postName: req.body.postName,
+      tag: req.body.tag,
+      pic: req.body.pic,
+    })
+console.log(post)
+    // await post.save()
 
     await Post.findOneAndUpdate(
       { name: postName },
