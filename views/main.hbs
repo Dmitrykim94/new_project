@@ -45,14 +45,14 @@
 
 <div class="container mt-4">
     <div class="row">
-        {{#each pic }}
+        {{#each smth }}
         <div class="col-auto mb-3">
             <div class="card" style="width: 18rem;">
                 <div class="mainCard">
                     <p class='postName' value="{{ this.name }}">{{ this.name }}</p>
                     <div class="card">
                         <div class="card-body">
-                            <img src='{{this}}' width="250" height="250">
+                            <img src='{{this.pic}}' value="{{this.pic}}" width="250" height="250">
                         </div>
                     </div>
                     <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
@@ -60,7 +60,7 @@
                         Likes: {{ this.likes}}
                     </span>
                     <div value={{this.tag}}>
-                        Tag:@{{ this.tag}}
+                        Tag:@{{this.tag}}
                     </div>
 
                 </div>
@@ -69,8 +69,8 @@
         {{/each}}
     </div>
 </div>
-
-<div class="container mt-4">
+       
+{{!-- <div class="container mt-4">
     <div class="row">
         {{#each posts }}
         <div class="col-auto mb-3">
@@ -95,7 +95,7 @@
         </div>
         {{/each}}
     </div>
-</div>
+</div> --}}
 
 
 <script src='/js/main.js'></script>
