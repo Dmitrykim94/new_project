@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    name: String,
+    like: Number,
+    postName: String,
     tag: String,
-    likes: Number,
+    pic: String
 });
+
 
 module.exports = mongoose.model('Post', postSchema);

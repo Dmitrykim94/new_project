@@ -48,11 +48,11 @@ async function seed() {
         },
         {
             likes: 6,
-            tags: 'dogs'
+            tag: 'dogs'
         },
         {
             likes: 99,
-            tags: 'Vehicle'
+            tag: 'Vehicle'
         }],
     })
     await User2.save()

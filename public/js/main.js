@@ -55,11 +55,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const url = item.children[1]
             const x = url.children[0]
             const y = x.children[0].getAttribute('value');
-            console.log(likeCorrect)
-            console.log(postNameCorrect)
+            console.log(likeCorrect)//norm
+            console.log(postNameCorrect)//ne nujen
             console.log(userTag)
-            console.log(y)
-            console.log(usernameLogged);
+            console.log(y)//norm
+            console.log(usernameLogged);// norm
              
             let res = await fetch('/main', {
                 method: 'POST',
