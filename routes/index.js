@@ -70,15 +70,16 @@ router.route('/main')
     })
     let indexOfMax = likesArray.length - 1
     arrayOfTags.forEach(function (elem) {
-      if(elem.likes===likesArray[indexOfMax]){
-          maxOfLikes=elem.tag
+      if (elem.likes === likesArray[indexOfMax]) {
+        maxOfLikes = elem.tag
       }
     })
-  
-    let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
-    let json = await resp.json();
-    let pic = json.message
-    res.render('main', { posts,pic, username: req.session.name , maxOfLikes})
+      let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
+      let json = await resp.json();
+      let pic = json.message
+      
+
+    res.render('main', { posts, pic, username: req.session.name, maxOfLikes })
   })
   .post(async (req, res) => {
     let postName = req.body.postName
@@ -86,7 +87,7 @@ router.route('/main')
     let likeUpdated = ++like
     let username = req.body.username;
     let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
-    
+
     let userFound = await User.findOne({ name: username });
     let tagArray = userFound.tagArray;
 
@@ -115,7 +116,7 @@ router.route('/main')
       { new: true }
     );
     res.json({ likeUpdated })
-      
+
   })
 
 
@@ -170,8 +171,8 @@ router.route('/filter')
     res.json({ likeUpdated })
   })
 
-  
-  
+
+
 
 
 
