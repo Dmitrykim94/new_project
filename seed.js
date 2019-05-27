@@ -14,11 +14,11 @@ async function seed() {
         password: 'mneZhalkoMuMu',
         tagArray: [{
             likes: 4,
-            tag: 'kittens'
+            tag: 'dogs'
         },
         {
             likes: 10,
-            tag: 'pups'
+            tag: 'Vehicle'
         }],
     })
     await User0.save()
@@ -29,11 +29,11 @@ async function seed() {
         password: 'YaVelikolepen',
         tagArray: [{
             likes: 101,
-            tag: 'pups'
+            tag: 'dogs'
         },
         {
             likes: 10,
-            tag: 'kittens'
+            tag: 'Vehicle'
         }],
     })
     await User1.save()
@@ -44,36 +44,36 @@ async function seed() {
         password: 'ochenDlinniiParole',
         tagArray: [{
             likes: 3,
-            tag: 'pups'
+            tag: 'foxes'
         },
         {
             likes: 6,
-            tags: 'kittens'
+            tags: 'dogs'
         },
         {
             likes: 99,
-            tags: 'sonic'
+            tags: 'Vehicle'
         }],
     })
     await User2.save()
 
     const Post0 = new Post({
         name: 'Sobachki',
-        tag: 'pups',
+        tag: 'dogs',
         likes: 123,
     })
     await Post0.save()
 
     const Post1 = new Post({
-        name: 'Kotyata, nya!',
-        tag: 'kittens',
-        likes: 1237865,
+        name: 'Foxes, nya!',
+        tag: 'foxes',
+        likes: 165,
     })
     await Post1.save()
 
     const Post2 = new Post({
-        name: 'Cool Ezh!',
-        tag: 'sonic',
+        name: 'Foxes Ezh!',
+        tag: 'foxes',
         likes: 1,
     })
     await Post2.save()

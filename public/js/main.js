@@ -41,31 +41,31 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location = `/filter?tag=${searchInput.value}`
     })
 
-    const preferencesButton = document.querySelector('button[name="getPreferences"]');
-    const innerDiv = document.querySelector('div[class="mainCardForTags"]');
-    preferencesButton.addEventListener('click', async (e) => {
-        e.preventDefault();
-        let resp = await fetch("https://dog.ceo/api/breed/hound/afghan/images");
-        let json = await resp.json();
-        console.log(json.message);
-        console.log(json.message[0]);
-        console.log(json.message[1]);
-        innerDiv.innerHTML = `
-    <p> CARD NAME</p>
-    <div class="card">
-    <div class="card-body">
-    <img src="${json.message[0]}" width="250" height="250" />
-    </div>
-    </div>
-    <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
-    <span class='like' value={{this.likes}}>
-     Likes: NUMBER 
-     </span>
-    <div TAG >
-    Tag: TAG
-    </div>
-    `
+    // const preferencesButton = document.querySelector('button[name="getPreferences"]');
+    // const innerDiv = document.querySelector('div[class="mainCardForTags"]');
+    // preferencesButton.addEventListener('click', async (e) => {
+    //     e.preventDefault();
+    //     let resp = await fetch("https://dog.ceo/api/breed/hound/afghan/images");
+    //     let json = await resp.json();
+    //     console.log(json.message);
+    //     console.log(json.message[0]);
+    //     console.log(json.message[1]);
+    //     innerDiv.innerHTML = `
+    // <p> CARD NAME</p>
+    // <div class="card">
+    // <div class="card-body">
+    // <img src="${json.message[0]}" width="250" height="250" />
+    // </div>
+    // </div>
+    // <button type="submit" id='likeIncrement' class="btn btn-light">❤️</button>
+    // <span class='like' value={{this.likes}}>
+    //  Likes: NUMBER 
+    //  </span>
+    // <div TAG >
+    // Tag: TAG
+    // </div>
+    // `
+    // })
     
-    })
 });
 

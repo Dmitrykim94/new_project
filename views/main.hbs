@@ -35,24 +35,26 @@
     </div>
 </nav>
 
-<div class="container mt-4">
+{{!-- <div class="container mt-4">
     <div class="row">
         <div class="col-auto mb-3">
             <button type="button" name="getPreferences" class="btn btn-dark">Get more {{maxOfLikes}}</button>
         </div>
     </div>
-</div>
-<div class="container mt-3">
+</div> --}}
+
+<div class="container mt-4">
     <div class="row">
+        {{#each pic }}
         <div class="col-auto mb-3">
             <div class="card" style="width: 18rem;">
                 <div class="mainCardForTags">
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
 </div>
-
 
 <div class="container mt-4">
     <div class="row">
