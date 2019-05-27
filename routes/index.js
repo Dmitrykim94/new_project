@@ -53,8 +53,8 @@ router.route('/login')
   })
 
 //////ROUTER FOR MAIN ACTIONS://////
-
 /////SHOWING POSTS AND LIKES COUNTERS FOR POSTS AND USERS////////////
+
 router.route('/main')
   .get(async (req, res) => {
     let posts = await Post.find()
@@ -74,7 +74,11 @@ router.route('/main')
           maxOfLikes=elem.tag
       }
     })
-    res.render('main', { posts, username: req.session.name , maxOfLikes})
+  
+    let resp = await fetch("https://dog.ceo/api/breed/hound/images/random/9");
+    let json = await resp.json();
+    let pic = json.message
+    res.render('main', { posts,pic, username: req.session.name , maxOfLikes})
   })
   .post(async (req, res) => {
     let postName = req.body.postName
@@ -82,7 +86,7 @@ router.route('/main')
     let likeUpdated = ++like
     let username = req.body.username;
     let tagName = req.body.tag;//должен приходить массив тегов которые лайкнулись
-
+    
     let userFound = await User.findOne({ name: username });
     let tagArray = userFound.tagArray;
 
@@ -167,7 +171,6 @@ router.route('/filter')
   })
 
   
-
   
 
 
